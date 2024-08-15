@@ -4,33 +4,38 @@ import com.thecode.controledeestoque.model.Produto;
 import com.thecode.controledeestoque.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/produtos")
 public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrarProduto(@RequestBody Produto produto) {
-        Produto novoProduto = produtoService.cadastrarProduto(produto);
-        return ResponseEntity.ok(novoProduto);
+    public String cadastrarProduto(Produto produto) {
+        produtoService.cadastrarProduto(produto);
+        return "redirect:/produtos/gerenciamento";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluirProduto(@PathVariable Long id) {
+    @PostMapping("/excluir")
+    public String excluirProduto(@RequestParam Long id) {
         produtoService.excluirProduto(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/produtos/gerenciamento";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Produto> procurarProdutoPorId(@PathVariable Long id) {
+    @GetMapping("/procurar")
+    public String procurarProdutoPorId(@RequestParam Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
-        return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (produto.isPresent()) {
+            model.addAttribute("produto", produto.get());
+        }
+        return "gerenciamento-produtos";
     }
 
     @GetMapping("/nome/{nome}")
@@ -43,5 +48,11 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> listarTodosProdutos() {
         List<Produto> produtos = produtoService.listarTodosProdutos();
         return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping("/gerenciamento")
+    public String gerenciamentoProdutos() {
+        return "gerenciamento-produtos"; // Refere-se ao arquivo HTML em
+                                         // src/main/resources/templates/gerenciamento-produtos.html
     }
 }
