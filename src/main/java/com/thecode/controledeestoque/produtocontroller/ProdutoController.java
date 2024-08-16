@@ -67,4 +67,14 @@ public class ProdutoController {
         }
         return "modificar-produto";
     }
+
+    @Controller
+    public class PrincipalController {
+
+        @GetMapping("/principal")
+        public String principal() {
+            return "principal"; // Refere-se ao arquivo principal.html em src/main/resources/templates/
+        }
+    }
+
 }
