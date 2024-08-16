@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Produto</title>
+</head>
+<body>
+    <h1>Excluir Produto</h1>
+    <form action="/produtos/excluir" method="post">
+        <label for="idExcluir">ID do Produto:</label>
+        <input type="number" id="idExcluir" name="id"><br><br>
+        <button type="submit">Excluir</button>
+    </form>
+    <h2>Produto a ser Excluído:</h2>
+    <p>ID: ${produto.id}</p>
+    <p>Nome: ${produto.nome}</p>
+    <p>Preço: ${produto.preco}</p>
+    <p>Deseja realmente excluir?</p>
+    <button onclick="window.location.href='/produtos/excluir?id=${produto.id}'">Sim</button>
+    <button onclick="window.history.back()">Não</button>
+</body>
+</html>

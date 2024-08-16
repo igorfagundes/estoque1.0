@@ -17,42 +17,54 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @GetMapping("/cadastrar")
+    public String mostrarFormCadastro(Model model) {
+        model.addAttribute("produto", new Produto());
+        return "cadastrar-produto";
+    }
+
     @PostMapping
-    public String cadastrarProduto(Produto produto) {
+    public String cadastrarProduto(Produto produto, Model model) {
         produtoService.cadastrarProduto(produto);
-        return "redirect:/produtos/gerenciamento";
+        model.addAttribute("produto", produto);
+        return "cadastrar-produto";
     }
 
     @PostMapping("/excluir")
-    public String excluirProduto(@RequestParam Long id) {
-        produtoService.excluirProduto(id);
-        return "redirect:/produtos/gerenciamento";
+    public String excluirProduto(@RequestParam Long id, Model model) {
+        Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
+        if (produto.isPresent()) {
+            produtoService.excluirProduto(id);
+            model.addAttribute("produto", produto.get());
+        }
+        return "excluir-produto";
     }
 
     @GetMapping("/procurar")
     public String procurarProdutoPorId(@RequestParam Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
-        if (produto.isPresent()) {
-            model.addAttribute("produto", produto.get());
-        }
-        return "gerenciamento-produtos";
+        produto.ifPresent(value -> model.addAttribute("produto", value));
+        return "procurar-produto";
     }
 
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<Produto> procurarProdutoPorNome(@PathVariable String nome) {
-        Produto produto = produtoService.procurarProdutoPorNome(nome);
-        return produto != null ? ResponseEntity.ok(produto) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Produto>> listarTodosProdutos() {
+    @GetMapping("/listar")
+    public String listarTodosProdutos(Model model) {
         List<Produto> produtos = produtoService.listarTodosProdutos();
-        return ResponseEntity.ok(produtos);
+        model.addAttribute("produtos", produtos);
+        return "listar-produtos";
     }
 
-    @GetMapping("/gerenciamento")
-    public String gerenciamentoProdutos() {
-        return "gerenciamento-produtos"; // Refere-se ao arquivo HTML em
-                                         // src/main/resources/templates/gerenciamento-produtos.html
+    @PostMapping("/modificar")
+    public String modificarProduto(@RequestParam Long id, @RequestParam String nome, @RequestParam double preco,
+            Model model) {
+        Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
+        if (produto.isPresent()) {
+            Produto p = produto.get();
+            p.setNome(nome);
+            p.setPreco(preco);
+            produtoService.cadastrarProduto(p);
+            model.addAttribute("produto", p);
+        }
+        return "modificar-produto";
     }
 }
