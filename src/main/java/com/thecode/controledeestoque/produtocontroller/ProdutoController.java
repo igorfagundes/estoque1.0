@@ -11,33 +11,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
 
-    @GetMapping("/produtos/cadastrar")
+    @GetMapping("/cadastrar")
     public String mostrarFormCadastro(Model model) {
         model.addAttribute("produto", new Produto());
-        return "cadastrar-produto"; // Nome do arquivo HTML para o formulário de cadastro
+        return "cadastrar-produto";
     }
 
-    @PostMapping("/produtos")
+    @PostMapping
     public String cadastrarProduto(@RequestParam("nome") String nome,
             @RequestParam("preco") Double preco,
             Model model) {
         Produto produto = new Produto();
         produto.setNome(nome);
         produto.setPreco(preco);
-
         produtoService.cadastrarProduto(produto);
 
-        // Adiciona uma mensagem de sucesso
         model.addAttribute("mensagem", "Produto cadastrado com sucesso!");
-        return "redirect:/produtos/listar"; // Redireciona para a página de listagem ou outra página relevante
+        return "redirect:/produtos/listar";
     }
 
-    @GetMapping("/produtos/excluir")
+    @GetMapping("/excluir")
     public String mostrarFormularioExclusao(@RequestParam("id") Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
         if (produto.isPresent()) {
@@ -49,28 +48,28 @@ public class ProdutoController {
         }
     }
 
-    @PostMapping("/produtos/excluir/confirmar")
+    @PostMapping("/excluir/confirmar")
     public String confirmarExclusao(@RequestParam("id") Long id,
             @RequestParam("confirm") String confirm,
             Model model) {
         if ("sim".equals(confirm)) {
             Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
             if (produto.isPresent()) {
+                Produto p = produto.get();
                 produtoService.excluirProduto(id);
-                model.addAttribute("produto", produto.get());
-                model.addAttribute("produtoExcluido", true);
-                model.addAttribute("mensagem", "Produto excluído com sucesso!");
-                return "excluir-produto"; // Volta para a página de confirmação da exclusão com mensagem de sucesso
+                model.addAttribute("mensagem", String.format("Produto %d, %s, %.2f excluído com sucesso!",
+                        p.getId(), p.getNome(), p.getPreco()));
             } else {
                 model.addAttribute("mensagem", "Produto não encontrado!");
-                return "listar-produtos";
             }
         } else {
-            return "redirect:/produtos/excluir?id=" + id; // Retorna para a página de exclusão com o ID do produto
+            model.addAttribute("mensagem", "A exclusão foi cancelada.");
         }
+
+        return "redirect:/principal"; // Redireciona para a página principal
     }
 
-    @GetMapping("/produtos/procurar")
+    @GetMapping("/procurar")
     public String procurarProdutoPorId(@RequestParam Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
         if (produto.isPresent()) {
@@ -78,18 +77,18 @@ public class ProdutoController {
             return "procurar-produto";
         } else {
             model.addAttribute("mensagem", "Produto não encontrado!");
-            return "listar-produtos"; // Volta para a listagem se não encontrar o produto
+            return "listar-produtos";
         }
     }
 
-    @GetMapping("/produtos/listar")
+    @GetMapping("/listar")
     public String listarTodosProdutos(Model model) {
         List<Produto> produtos = produtoService.listarTodosProdutos();
         model.addAttribute("produtos", produtos);
-        return "listar-produtos"; // Nome do arquivo HTML para listar produtos
+        return "listar-produtos";
     }
 
-    @PostMapping("/produtos/modificar")
+    @PostMapping("/modificar")
     public String modificarProduto(@RequestParam Long id,
             @RequestParam String nome,
             @RequestParam double preco,
@@ -102,21 +101,20 @@ public class ProdutoController {
             produtoService.cadastrarProduto(p);
             model.addAttribute("produto", p);
             model.addAttribute("mensagem", "Produto modificado com sucesso!");
-            return "modificar-produto"; // Volta para a página de modificação com as informações atualizadas
+            return "modificar-produto";
         } else {
             model.addAttribute("mensagem", "Produto não encontrado!");
             return "listar-produtos";
         }
     }
+}
 
-    // Classe interna para lidar com a navegação para a página principal
-    @Controller
-    public class PrincipalController {
+@Controller
+@RequestMapping("/principal")
+class PrincipalController {
 
-        @GetMapping("/principal")
-        public String principal() {
-            return "principal"; // Refere-se ao arquivo principal.html em src/main/resources/templates/
-        }
+    @GetMapping
+    public String principal() {
+        return "principal";
     }
-
 }

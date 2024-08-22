@@ -7,10 +7,17 @@
     <style>
         .tabs {
             display: flex;
+            cursor: pointer;
         }
         .tab {
             padding: 10px;
-            cursor: pointer;
+            border: 1px solid #ccc;
+            margin-right: 5px;
+            background-color: #f0f0f0;
+        }
+        .tab.active {
+            background-color: #ddd;
+            font-weight: bold;
         }
         .tab-content {
             display: none;
@@ -18,61 +25,172 @@
         .tab-content.active {
             display: block;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .pagination button {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .pagination button:hover {
+            background-color: #ddd;
+        }
+        .back-to-main {
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .back-to-main button {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .back-to-main button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
     <h1>Gerenciamento</h1>
     <div class="tabs">
-        <div class="tab" onclick="showTab('produtos')">Produtos</div>
-        <div class="tab" onclick="showTab('caixa')">Caixa</div>
-        <div class="tab" onclick="showTab('fornecedores')">Fornecedores</div>
-        <div class="tab" onclick="showTab('clientes')">Clientes</div>
-        <div class="tab" onclick="showTab('configuracoes')">Configurações</div>
+        <div id="tab-inicio" class="tab" onclick="showTab('inicio')">Início</div>
+        <div id="tab-produtos" class="tab" onclick="showTab('produtos')">Produtos</div>
+        <div id="tab-caixa" class="tab" onclick="showTab('caixa')">Caixa</div>
+        <div id="tab-fornecedores" class="tab" onclick="showTab('fornecedores')">Fornecedores</div>
+        <div id="tab-clientes" class="tab" onclick="showTab('clientes')">Clientes</div>
+        <div id="tab-configuracoes" class="tab" onclick="showTab('configuracoes')">Configurações</div>
+    </div>
+
+    <div id="inicio" class="tab-content">
+        <h2>Bem-vindo ao Sistema de Gerenciamento</h2>
+        <p>Selecione uma aba acima para começar.</p>
     </div>
 
     <div id="produtos" class="tab-content">
         <div class="tabs">
-            <div class="tab" onclick="showSubTab('cadastrar')">Cadastrar</div>
-            <div class="tab" onclick="showSubTab('excluir')">Excluir</div>
-            <div class="tab" onclick="showSubTab('procurar')">Procurar</div>
-            <div class="tab" onclick="showSubTab('modificar')">Modificar</div>
-            <div class="tab" onclick="showSubTab('listar')">Listar</div>
+            <div id="tab-cadastrar" class="tab" onclick="showSubTab('cadastrar')">Cadastrar</div>
+            <div id="tab-excluir" class="tab" onclick="showSubTab('excluir')">Excluir</div>
+            <div id="tab-procurar" class="tab" onclick="showSubTab('procurar')">Procurar</div>
+            <div id="tab-modificar" class="tab" onclick="showSubTab('modificar')">Modificar</div>
+            <div id="tab-listar" class="tab" onclick="showSubTab('listar')">Listar</div>
         </div>
         <div id="cadastrar" class="tab-content">
-            <a href="/produtos/cadastrar">Ir para a página de cadastro</a>
+            <h2>Cadastrar Produto</h2>
+            <form action="/produtos" method="post">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+                <label for="preco">Preço:</label>
+                <input type="number" step="0.01" id="preco" name="preco" required><br><br>
+                <button type="submit">Cadastrar</button>
+            </form>
         </div>
         <div id="excluir" class="tab-content">
+            <h2>Excluir Produto</h2>
             <form action="/produtos/excluir" method="get">
-                <label for="id">ID do Produto:</label>
-                <input type="text" id="id" name="id" required>
+                <label for="id-excluir">ID do Produto:</label>
+                <input type="text" id="id-excluir" name="id" required>
                 <button type="submit">Excluir Produto</button>
             </form>
         </div>
         <div id="procurar" class="tab-content">
-            <form action="/procurar" method="get">
-                <label for="id">ID do Produto:</label>
-                <input type="text" id="id" name="id" required>
+            <h2>Procurar Produto</h2>
+            <form action="/produtos/procurar" method="get">
+                <label for="id-procurar">ID do Produto:</label>
+                <input type="text" id="id-procurar" name="id" required>
                 <button type="submit">Procurar Produto</button>
             </form>
         </div>
         <div id="modificar" class="tab-content">
-            <a href="/produtos/modificar">Ir para a página de modificação</a>
+            <h2>Modificar Produto</h2>
+            <form action="/produtos/modificar" method="post">
+                <label for="id">ID do Produto:</label>
+                <input type="number" id="id" name="id" required><br><br>
+                <label for="nome">Novo Nome:</label>
+                <input type="text" id="nome" name="nome"><br><br>
+                <label for="preco">Novo Preço:</label>
+                <input type="number" step="0.01" id="preco" name="preco"><br><br>
+                <button type="submit">Modificar</button>
+            </form>
         </div>
         <div id="listar" class="tab-content">
-            <a href="/produtos/listar">Ir para a página de listagem</a>
+            <h2>Listar Produtos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- As linhas dos produtos serão preenchidas dinamicamente -->
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button onclick="loadMore()">Carregar Mais</button>
+            </div>
+            <div class="back-to-main">
+                <button onclick="showTab('inicio')">Voltar ao Início</button>
+            </div>
         </div>
     </div>
 
     <script>
         function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-            document.getElementById(tabId).style.display = 'block';
+            // Remove a classe 'active' de todas as abas principais
+            document.querySelectorAll('.tabs > .tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove a classe 'active' de todos os conteúdos de aba principal
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Adiciona a classe 'active' à aba e ao conteúdo selecionado
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Inicializa a exibição da primeira sub-aba ao mudar de aba principal
+            const firstSubTabId = document.querySelector(`#${tabId} .tab-content`).id;
+            if (firstSubTabId) {
+                showSubTab(firstSubTabId);
+            }
         }
 
         function showSubTab(subTabId) {
-            document.querySelectorAll('#produtos .tab-content').forEach(el => el.style.display = 'none');
-            document.getElementById(subTabId).style.display = 'block';
+            // Remove a classe 'active' de todas as sub-abas
+            document.querySelectorAll('#produtos .tabs > .tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove a classe 'active' de todos os conteúdos de sub-aba
+            document.querySelectorAll('#produtos .tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Adiciona a classe 'active' à sub-aba e ao conteúdo selecionado
+            document.getElementById(`tab-${subTabId}`).classList.add('active');
+            document.getElementById(subTabId).classList.add('active');
         }
+
+        // Inicializa a exibição da aba 'Início'
+        showTab('inicio');
     </script>
 </body>
 </html>

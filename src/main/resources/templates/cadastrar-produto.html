@@ -4,15 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Produto</title>
+    <style>
+        .tabs {
+            display: flex;
+            cursor: pointer;
+        }
+        .tab {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-right: 5px;
+            background-color: #f0f0f0;
+        }
+        .tab.active {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h2>Cadastrar Produto</h2>
-    <form action="/produtos" method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required><br><br>
-        <label for="preco">Preço:</label>
-        <input type="number" step="0.01" id="preco" name="preco" required><br><br>
-        <button type="submit">Cadastrar</button>
-    </form>
+    <h1>Gerenciamento de Produtos</h1>
+    <div class="tabs">
+        <div id="tab-cadastrar" class="tab" onclick="showSubTab('cadastrar')">Cadastrar</div>
+        <div id="tab-excluir" class="tab" onclick="showSubTab('excluir')">Excluir</div>
+        <div id="tab-procurar" class="tab" onclick="showSubTab('procurar')">Procurar</div>
+        <div id="tab-modificar" class="tab" onclick="showSubTab('modificar')">Modificar</div>
+        <div id="tab-listar" class="tab" onclick="showSubTab('listar')">Listar</div>
+    </div>
+
+    <div id="cadastrar" class="tab-content">
+        <h2>Cadastrar Produto</h2>
+        <form action="/produtos" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required><br><br>
+            <label for="preco">Preço:</label>
+            <input type="number" step="0.01" id="preco" name="preco" required><br><br>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <script>
+        function showSubTab(subTabId) {
+            // Remove a classe 'active' de todas as sub-abas
+            document.querySelectorAll('.tabs > .tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove a classe 'active' de todos os conteúdos de sub-aba
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Adiciona a classe 'active' à sub-aba e ao conteúdo selecionado
+            document.getElementById(`tab-${subTabId}`).classList.add('active');
+            document.getElementById(subTabId).classList.add('active');
+        }
+
+        // Inicializa a exibição da sub-aba 'Cadastrar'
+        showSubTab('cadastrar');
+    </script>
 </body>
 </html>

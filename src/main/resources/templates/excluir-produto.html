@@ -10,42 +10,40 @@
             padding: 20px;
             margin: 20px 0;
         }
+
         .buttons {
             margin-top: 20px;
         }
+
         .buttons button {
             margin-right: 10px;
-        }
-        .hidden {
-            display: none;
         }
     </style>
 </head>
 <body>
-    <h2 th:if="${produtoExcluido}" th:text="${mensagem}"></h2>
-    
-    <div class="confirmation-box" th:if="${produtoExcluido}">
-        <p>ID: <span th:text="${produto.id}"></span></p>
-        <p>Nome: <span th:text="${produto.nome}"></span></p>
-        <p>Preço: <span th:text="${produto.preco}"></span></p>
-    </div>
-
-    <form th:if="${produtoExcluido}" action="/principal" method="get">
-        <div class="buttons">
-            <button type="submit">Voltar ao Menu Principal</button>
-        </div>
-    </form>
-
-    <div th:if="${!produtoExcluido}">
-        <h2>Excluir Produto</h2>
-
+    <!-- Exibição da mensagem de sucesso ou falha -->
+    <div th:if="${mensagem}">
+        <h2 th:text="${mensagem}"></h2>
         <div class="confirmation-box">
-            <p th:text="${mensagem}"></p>
             <p>ID: <span th:text="${produto.id}"></span></p>
             <p>Nome: <span th:text="${produto.nome}"></span></p>
             <p>Preço: <span th:text="${produto.preco}"></span></p>
         </div>
+        <form action="/principal" method="get">
+            <div class="buttons">
+                <button type="submit">Voltar ao Menu Principal</button>
+            </div>
+        </form>
+    </div>
 
+    <!-- Exibição do formulário de exclusão -->
+    <div th:unless="${mensagem}">
+        <h2>Excluir Produto</h2>
+        <div class="confirmation-box">
+            <p>ID: <span th:text="${produto.id}"></span></p>
+            <p>Nome: <span th:text="${produto.nome}"></span></p>
+            <p>Preço: <span th:text="${produto.preco}"></span></p>
+        </div>
         <p>Deseja realmente excluir este produto?</p>
         <form action="/produtos/excluir/confirmar" method="post">
             <input type="hidden" name="id" th:value="${produto.id}" />
