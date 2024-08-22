@@ -13,8 +13,8 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public Produto cadastrarProduto(Produto produto) {
-        return produtoRepository.save(produto);
+    public void cadastrarProduto(Produto produto) {
+        produtoRepository.save(produto);
     }
 
     public void excluirProduto(Long id) {

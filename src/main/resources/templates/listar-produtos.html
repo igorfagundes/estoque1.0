@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar Todos os Produtos</title>
+    <title>Listar Produtos</title>
 </head>
 <body>
-    <h1>Listar Todos os Produtos</h1>
-    <ul>
-        <c:forEach var="produto" items="${produtos}">
-            <li>ID: ${produto.id}, Nome: ${produto.nome}, Preço: ${produto.preco}</li>
-        </c:forEach>
-    </ul>
+    <h2>Listar Produtos</h2>
+    <p th:text="${mensagem}"></p> <!-- Exibe mensagem de sucesso ou erro -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.id}"></td>
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.preco}"></td>
+                <td>
+                    <!-- Adicionar ações para editar ou excluir -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

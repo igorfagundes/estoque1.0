@@ -11,7 +11,7 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private double preco;
+    private Double preco;
 
     // Getters e setters
     public Long getId() {

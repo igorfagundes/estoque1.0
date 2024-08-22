@@ -4,20 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excluir Produto</title>
+    <style>
+        .confirmation-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Excluir Produto</h1>
-    <form action="/produtos/excluir" method="post">
-        <label for="idExcluir">ID do Produto:</label>
-        <input type="number" id="idExcluir" name="id"><br><br>
-        <button type="submit">Excluir</button>
+    <h2 th:if="${produtoExcluido}" th:text="${mensagem}"></h2>
+    
+    <div class="confirmation-box" th:if="${produtoExcluido}">
+        <p>ID: <span th:text="${produto.id}"></span></p>
+        <p>Nome: <span th:text="${produto.nome}"></span></p>
+        <p>Preço: <span th:text="${produto.preco}"></span></p>
+    </div>
+
+    <form th:if="${produtoExcluido}" action="/principal" method="get">
+        <div class="buttons">
+            <button type="submit">Voltar ao Menu Principal</button>
+        </div>
     </form>
-    <h2>Produto a ser Excluído:</h2>
-    <p>ID: ${produto.id}</p>
-    <p>Nome: ${produto.nome}</p>
-    <p>Preço: ${produto.preco}</p>
-    <p>Deseja realmente excluir?</p>
-    <button onclick="window.location.href='/produtos/excluir?id=${produto.id}'">Sim</button>
-    <button onclick="window.history.back()">Não</button>
+
+    <div th:if="${!produtoExcluido}">
+        <h2>Excluir Produto</h2>
+
+        <div class="confirmation-box">
+            <p th:text="${mensagem}"></p>
+            <p>ID: <span th:text="${produto.id}"></span></p>
+            <p>Nome: <span th:text="${produto.nome}"></span></p>
+            <p>Preço: <span th:text="${produto.preco}"></span></p>
+        </div>
+
+        <p>Deseja realmente excluir este produto?</p>
+        <form action="/produtos/excluir/confirmar" method="post">
+            <input type="hidden" name="id" th:value="${produto.id}" />
+            <div class="buttons">
+                <button type="submit" name="confirm" value="sim">Sim</button>
+                <button type="submit" name="confirm" value="não">Não</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
