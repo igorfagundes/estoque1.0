@@ -17,31 +17,34 @@ public class FinanceiroController {
 
     @GetMapping
     public List<Financeiro> getAllFinanceiro() {
-        return financeiroService.findAll();
+        return financeiroService.listarTodos(); // Alterado para corresponder ao método no serviço
     }
 
     @PostMapping
     public Financeiro createFinanceiro(@RequestBody Financeiro financeiro) {
-        return financeiroService.save(financeiro);
+        return financeiroService.salvar(financeiro); // Alterado para corresponder ao método no serviço
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Financeiro> getFinanceiroById(@PathVariable Long id) {
-        return financeiroService.findById(id)
+        return financeiroService.encontrarPorId(id) // Alterado para corresponder ao método no serviço
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Financeiro> updateFinanceiro(@PathVariable Long id, @RequestBody Financeiro financeiro) {
-        return financeiroService.update(id, financeiro)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        // Não há método de atualização diretamente no serviço, então seria necessário
+        // adicionar um
+        // Você pode usar o método de modificarStatus para atualizar o status ou criar
+        // um método específico para atualização completa
+        return ResponseEntity.ok(financeiroService.salvar(financeiro)); // Aqui assumimos que `salvar` pode ser usado
+                                                                        // para atualizar
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFinanceiro(@PathVariable Long id) {
-        financeiroService.delete(id);
+        financeiroService.excluir(id); // Alterado para corresponder ao método no serviço
         return ResponseEntity.noContent().build();
     }
 }

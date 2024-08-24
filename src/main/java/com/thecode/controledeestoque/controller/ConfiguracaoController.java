@@ -15,11 +15,17 @@ public class ConfiguracaoController {
 
     @GetMapping
     public ResponseEntity<Configuracao> getConfiguracoes() {
-        return ResponseEntity.ok(configuracaoService.findCurrentSettings());
+        return ResponseEntity.ok(configuracaoService.listarConfiguracao());
     }
 
-    @PutMapping
-    public ResponseEntity<Configuracao> updateConfiguracoes(@RequestBody Configuracao configuracao) {
-        return ResponseEntity.ok(configuracaoService.update(configuracao));
+    @PutMapping("/{id}")
+    public ResponseEntity<Configuracao> updateConfiguracoes(@PathVariable Long id,
+            @RequestBody Configuracao configuracao) {
+        try {
+            Configuracao updatedConfig = configuracaoService.atualizarConfiguracao(id, configuracao);
+            return ResponseEntity.ok(updatedConfig);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(null); // Retorne um erro apropriado, se necessário
+        }
     }
 }
