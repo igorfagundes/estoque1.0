@@ -30,16 +30,16 @@
 <body>
     <h1>Gerenciamento de Produtos</h1>
     <div class="tabs">
-        <div id="tab-cadastrar" class="tab" onclick="showSubTab('cadastrar')">Cadastrar</div>
+        <div id="tab-cadastrar" class="tab active" onclick="showSubTab('cadastrar')">Cadastrar</div>
         <div id="tab-excluir" class="tab" onclick="showSubTab('excluir')">Excluir</div>
         <div id="tab-procurar" class="tab" onclick="showSubTab('procurar')">Procurar</div>
         <div id="tab-modificar" class="tab" onclick="showSubTab('modificar')">Modificar</div>
         <div id="tab-listar" class="tab" onclick="showSubTab('listar')">Listar</div>
     </div>
 
-    <div id="cadastrar" class="tab-content">
+    <div id="cadastrar" class="tab-content active">
         <h2>Cadastrar Produto</h2>
-        <form action="/produtos" method="post">
+        <form action="/produtos/cadastrar" method="post">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required><br><br>
             <label for="preco">Preço:</label>
@@ -48,24 +48,20 @@
         </form>
     </div>
 
+    <!-- Outros conteúdos das sub-abas aqui -->
+
     <script>
         function showSubTab(subTabId) {
-            // Remove a classe 'active' de todas as sub-abas
             document.querySelectorAll('.tabs > .tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            // Remove a classe 'active' de todos os conteúdos de sub-aba
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
 
-            // Adiciona a classe 'active' à sub-aba e ao conteúdo selecionado
             document.getElementById(`tab-${subTabId}`).classList.add('active');
             document.getElementById(subTabId).classList.add('active');
         }
-
-        // Inicializa a exibição da sub-aba 'Cadastrar'
-        showSubTab('cadastrar');
     </script>
 </body>
 </html>

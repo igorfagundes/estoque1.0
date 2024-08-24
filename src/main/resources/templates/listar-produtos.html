@@ -49,7 +49,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- O Thymeleaf irá preencher isso -->
                     <tr th:each="produto : ${produtos}">
                         <td th:text="${produto.id}"></td>
                         <td th:text="${produto.nome}"></td>
@@ -78,10 +77,8 @@
             document.getElementById(`tab-${tabId}`).classList.add('active');
             document.getElementById(tabId).classList.add('active');
 
-            const firstSubTabId = document.querySelector(`#${tabId} .tab-content`).id;
-            if (firstSubTabId) {
-                showSubTab(firstSubTabId);
-            }
+            // Exibir a primeira sub-aba ao mudar de aba principal
+            showSubTab(document.querySelector(`#${tabId} .tab-content.active`).id);
         }
 
         function showSubTab(subTabId) {
@@ -100,6 +97,7 @@
             // Lógica para carregar mais produtos
         }
 
+        // Inicializa a exibição da aba 'Produtos' e a sub-aba 'Listar'
         showTab('produtos');
         showSubTab('listar');
     </script>

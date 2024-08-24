@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Operação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .message {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .message.success {
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
+        .message.error {
+            border-color: #f44336;
+            color: #f44336;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .buttons button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultado da Operação</h1>
+    <div class="message ${status}">
+        ${mensagem}
+    </div>
+
+    <div class="buttons">
+        <button onclick="window.location.href='/produtos/cadastrar'">Cadastrar Novo Produto</button>
+        <button onclick="window.location.href='/principal'">Voltar ao Início</button>
+    </div>
+</body>
+</html>

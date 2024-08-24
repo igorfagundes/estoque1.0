@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento</title>
     <style>
+        /* Estilos para abas e conteúdo */
         .tabs {
             display: flex;
             cursor: pointer;
+            margin-bottom: 10px;
         }
         .tab {
             padding: 10px;
-            border: 1px solid #ccc;
+            background: #f0f0f0;
             margin-right: 5px;
-            background-color: #f0f0f0;
-        }
-        .tab.active {
-            background-color: #ddd;
-            font-weight: bold;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
         .tab-content {
             display: none;
@@ -25,47 +24,49 @@
         .tab-content.active {
             display: block;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .pagination {
-            margin: 20px 0;
-            text-align: center;
-        }
-        .pagination button {
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-        .pagination button:hover {
-            background-color: #ddd;
-        }
-        .back-to-main {
-            display: block;
-            margin: 20px 0;
-            text-align: center;
-        }
-        .back-to-main button {
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-        .back-to-main button:hover {
-            background-color: #ddd;
-        }
     </style>
+    <script>
+        function showTab(tabId) {
+            // Atualiza a URL sem recarregar a página
+            history.pushState(null, null, `/principal/${tabId}`);
+            
+            document.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function showSubTab(tabId) {
+            // Atualiza a URL sem recarregar a página
+            history.pushState(null, null, `/principal/produtos/${tabId}`);
+            
+            document.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Função para carregar o estado inicial baseado na URL
+        function loadStateFromUrl() {
+            const path = window.location.pathname;
+            const parts = path.split('/').filter(part => part);
+
+            if (parts.length === 2 && parts[1] === 'produtos') {
+                showTab('produtos');
+            } else if (parts.length === 3 && parts[1] === 'produtos') {
+                showTab('produtos');
+                showSubTab(parts[2]);
+            } else {
+                showTab('inicio');
+            }
+        }
+
+        // Carregar o estado quando a página for carregada
+        window.onload = loadStateFromUrl;
+
+        // Manter o estado ao navegar para frente e para trás
+        window.onpopstate = loadStateFromUrl;
+    </script>
 </head>
 <body>
     <h1>Gerenciamento</h1>
@@ -78,7 +79,7 @@
         <div id="tab-configuracoes" class="tab" onclick="showTab('configuracoes')">Configurações</div>
     </div>
 
-    <div id="inicio" class="tab-content">
+    <div id="inicio" class="tab-content active">
         <h2>Bem-vindo ao Sistema de Gerenciamento</h2>
         <p>Selecione uma aba acima para começar.</p>
     </div>
@@ -93,7 +94,7 @@
         </div>
         <div id="cadastrar" class="tab-content">
             <h2>Cadastrar Produto</h2>
-            <form action="/produtos" method="post">
+            <form action="/principal/produtos/cadastrar" method="post">
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required><br><br>
                 <label for="preco">Preço:</label>
@@ -103,94 +104,56 @@
         </div>
         <div id="excluir" class="tab-content">
             <h2>Excluir Produto</h2>
-            <form action="/produtos/excluir" method="get">
-                <label for="id-excluir">ID do Produto:</label>
-                <input type="text" id="id-excluir" name="id" required>
-                <button type="submit">Excluir Produto</button>
+            <form action="/principal/produtos/excluir" method="get">
+                <label for="id">ID do Produto:</label>
+                <input type="number" id="id" name="id" required><br><br>
+                <button type="submit">Buscar</button>
             </form>
         </div>
         <div id="procurar" class="tab-content">
             <h2>Procurar Produto</h2>
-            <form action="/produtos/procurar" method="get">
-                <label for="id-procurar">ID do Produto:</label>
-                <input type="text" id="id-procurar" name="id" required>
-                <button type="submit">Procurar Produto</button>
+            <form action="/principal/produtos/procurar" method="get">
+                <label for="id">ID do Produto:</label>
+                <input type="number" id="id" name="id" required><br><br>
+                <button type="submit">Buscar</button>
             </form>
         </div>
         <div id="modificar" class="tab-content">
             <h2>Modificar Produto</h2>
-            <form action="/produtos/modificar" method="post">
+            <form action="/principal/produtos/modificar" method="post">
                 <label for="id">ID do Produto:</label>
                 <input type="number" id="id" name="id" required><br><br>
-                <label for="nome">Novo Nome:</label>
-                <input type="text" id="nome" name="nome"><br><br>
-                <label for="preco">Novo Preço:</label>
-                <input type="number" step="0.01" id="preco" name="preco"><br><br>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+                <label for="preco">Preço:</label>
+                <input type="number" step="0.01" id="preco" name="preco" required><br><br>
                 <button type="submit">Modificar</button>
             </form>
         </div>
         <div id="listar" class="tab-content">
             <h2>Listar Produtos</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- As linhas dos produtos serão preenchidas dinamicamente -->
-                </tbody>
-            </table>
-            <div class="pagination">
-                <button onclick="loadMore()">Carregar Mais</button>
-            </div>
-            <div class="back-to-main">
-                <button onclick="showTab('inicio')">Voltar ao Início</button>
-            </div>
+            <p>Lista de produtos será exibida aqui.</p>
         </div>
     </div>
 
-    <script>
-        function showTab(tabId) {
-            // Remove a classe 'active' de todas as abas principais
-            document.querySelectorAll('.tabs > .tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            // Remove a classe 'active' de todos os conteúdos de aba principal
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+    <div id="caixa" class="tab-content">
+        <h2>Caixa</h2>
+        <p>Conteúdo da aba Caixa.</p>
+    </div>
 
-            // Adiciona a classe 'active' à aba e ao conteúdo selecionado
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-            
-            // Inicializa a exibição da primeira sub-aba ao mudar de aba principal
-            const firstSubTabId = document.querySelector(`#${tabId} .tab-content`).id;
-            if (firstSubTabId) {
-                showSubTab(firstSubTabId);
-            }
-        }
+    <div id="fornecedores" class="tab-content">
+        <h2>Fornecedores</h2>
+        <p>Conteúdo da aba Fornecedores.</p>
+    </div>
 
-        function showSubTab(subTabId) {
-            // Remove a classe 'active' de todas as sub-abas
-            document.querySelectorAll('#produtos .tabs > .tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            // Remove a classe 'active' de todos os conteúdos de sub-aba
-            document.querySelectorAll('#produtos .tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+    <div id="clientes" class="tab-content">
+        <h2>Clientes</h2>
+        <p>Conteúdo da aba Clientes.</p>
+    </div>
 
-            // Adiciona a classe 'active' à sub-aba e ao conteúdo selecionado
-            document.getElementById(`tab-${subTabId}`).classList.add('active');
-            document.getElementById(subTabId).classList.add('active');
-        }
-
-        // Inicializa a exibição da aba 'Início'
-        showTab('inicio');
-    </script>
+    <div id="configuracoes" class="tab-content">
+        <h2>Configurações</h2>
+        <p>Conteúdo da aba Configurações.</p>
+    </div>
 </body>
 </html>

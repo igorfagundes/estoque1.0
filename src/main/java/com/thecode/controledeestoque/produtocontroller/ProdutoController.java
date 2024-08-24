@@ -7,23 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/produtos")
+@RequestMapping("/principal/produtos")
 public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
 
+    // Mostrar formulário de cadastro
     @GetMapping("/cadastrar")
     public String mostrarFormCadastro(Model model) {
         model.addAttribute("produto", new Produto());
         return "cadastrar-produto";
     }
 
-    @PostMapping
+    // Processar cadastro de produto
+    @PostMapping("/cadastrar")
     public String cadastrarProduto(@RequestParam("nome") String nome,
             @RequestParam("preco") Double preco,
             Model model) {
@@ -32,10 +33,13 @@ public class ProdutoController {
         produto.setPreco(preco);
         produtoService.cadastrarProduto(produto);
 
-        model.addAttribute("mensagem", "Produto cadastrado com sucesso!");
-        return "redirect:/produtos/listar";
+        model.addAttribute("status", "success");
+        model.addAttribute("mensagem", String.format("Produto cadastrado com sucesso! ID: %d, Nome: %s, Preço: %.2f",
+                produto.getId(), produto.getNome(), produto.getPreco()));
+        return "resultado-produto";
     }
 
+    // Mostrar formulário de exclusão
     @GetMapping("/excluir")
     public String mostrarFormularioExclusao(@RequestParam("id") Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
@@ -44,10 +48,11 @@ public class ProdutoController {
             return "excluir-produto";
         } else {
             model.addAttribute("mensagem", "Produto não encontrado!");
-            return "listar-produtos";
+            return "resultado-produto";
         }
     }
 
+    // Confirmar exclusão de produto
     @PostMapping("/excluir/confirmar")
     public String confirmarExclusao(@RequestParam("id") Long id,
             @RequestParam("confirm") String confirm,
@@ -65,29 +70,23 @@ public class ProdutoController {
         } else {
             model.addAttribute("mensagem", "A exclusão foi cancelada.");
         }
-
-        return "redirect:/principal"; // Redireciona para a página principal
+        return "resultado-produto";
     }
 
+    // Procurar produto por ID
     @GetMapping("/procurar")
     public String procurarProdutoPorId(@RequestParam Long id, Model model) {
         Optional<Produto> produto = produtoService.procurarProdutoPorId(id);
         if (produto.isPresent()) {
             model.addAttribute("produto", produto.get());
-            return "procurar-produto";
+            return "resultado-produto";
         } else {
             model.addAttribute("mensagem", "Produto não encontrado!");
-            return "listar-produtos";
+            return "resultado-produto";
         }
     }
 
-    @GetMapping("/listar")
-    public String listarTodosProdutos(Model model) {
-        List<Produto> produtos = produtoService.listarTodosProdutos();
-        model.addAttribute("produtos", produtos);
-        return "listar-produtos";
-    }
-
+    // Modificar produto
     @PostMapping("/modificar")
     public String modificarProduto(@RequestParam Long id,
             @RequestParam String nome,
@@ -100,21 +99,13 @@ public class ProdutoController {
             p.setPreco(preco);
             produtoService.cadastrarProduto(p);
             model.addAttribute("produto", p);
-            model.addAttribute("mensagem", "Produto modificado com sucesso!");
-            return "modificar-produto";
+            model.addAttribute("mensagem",
+                    String.format("Produto modificado com sucesso! ID: %d, Nome: %s, Preço: %.2f",
+                            p.getId(), p.getNome(), p.getPreco()));
+            return "resultado-produto";
         } else {
             model.addAttribute("mensagem", "Produto não encontrado!");
-            return "listar-produtos";
+            return "resultado-produto";
         }
-    }
-}
-
-@Controller
-@RequestMapping("/principal")
-class PrincipalController {
-
-    @GetMapping
-    public String principal() {
-        return "principal";
     }
 }
