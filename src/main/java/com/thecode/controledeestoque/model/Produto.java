@@ -11,16 +11,16 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private Double preco;
-    private String descrição;
+    private String descricao; // Verifique se o nome do campo é 'descricao'
     private String imagem;
     private String codigoQr;
     private Integer quantidadeEstoque;
     private Integer saidaEstoque;
 
-    // Getters and Setters
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -45,12 +45,12 @@ public class Produto {
         this.preco = preco;
     }
 
-    public String getDescrição() {
-        return descrição;
+    public String getDescricao() {
+        return descricao; // Certifique-se de que este método exista
     }
 
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getImagem() {
@@ -83,19 +83,5 @@ public class Produto {
 
     public void setSaidaEstoque(Integer saidaEstoque) {
         this.saidaEstoque = saidaEstoque;
-    }
-
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", preco=" + preco +
-                ", descrição='" + descrição + '\'' +
-                ", imagem='" + imagem + '\'' +
-                ", codigoQr='" + codigoQr + '\'' +
-                ", quantidadeEstoque=" + quantidadeEstoque +
-                ", saidaEstoque=" + saidaEstoque +
-                '}';
     }
 }

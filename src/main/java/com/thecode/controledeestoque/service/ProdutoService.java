@@ -30,8 +30,12 @@ public class ProdutoService {
     }
 
     // Excluir produto por ID
-    public void excluir(Long id) {
-        produtoRepository.deleteById(id);
+    public boolean excluir(Long id) {
+        if (produtoRepository.existsById(id)) {
+            produtoRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     // Cadastrar um novo produto (mesmo método que salvar)
@@ -40,7 +44,7 @@ public class ProdutoService {
     }
 
     // Modificar um produto existente
-    public Produto modificar(Long id, Produto produtoAtualizado) {
+    public boolean modificar(Long id, Produto produtoAtualizado) {
         // Verifica se o produto existe
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
         if (produtoExistente.isPresent()) {
@@ -48,16 +52,15 @@ public class ProdutoService {
             // Atualiza os campos do produto existente
             produto.setNome(produtoAtualizado.getNome());
             produto.setPreco(produtoAtualizado.getPreco());
-            produto.setDescrição(produtoAtualizado.getDescrição()); // Confirme o nome correto do método
+            produto.setDescricao(produtoAtualizado.getDescricao()); // Verifique o nome correto do método
             produto.setImagem(produtoAtualizado.getImagem());
             produto.setCodigoQr(produtoAtualizado.getCodigoQr());
             produto.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
             produto.setSaidaEstoque(produtoAtualizado.getSaidaEstoque());
             // Salva as alterações
-            return produtoRepository.save(produto);
-        } else {
-            // Lança exceção ou retorna um valor indicando que o produto não foi encontrado
-            throw new RuntimeException("Produto não encontrado com o ID: " + id);
+            produtoRepository.save(produto);
+            return true;
         }
+        return false; // Produto não encontrado
     }
 }

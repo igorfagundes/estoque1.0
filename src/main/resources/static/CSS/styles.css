@@ -1,20 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
 .container {
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto; /* Centraliza a .container horizontalmente e adiciona uma margem superior/inferior */
     padding: 20px;
-    border: 1px solid #ccc;
+    background-color: #fff; /* Fundo branco para contraste */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 8px; /* Canto arredondado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave para destacar o container */
 }
 
 .menu {
     list-style-type: none;
     padding: 0;
+    margin: 0; /* Remove margem padrão */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    border-bottom: 1px solid #ccc; /* Linha na parte inferior para separar o menu */
+    padding-bottom: 10px; /* Espaço entre o menu e o conteúdo */
 }
 
 .menu li {
-    display: inline;
-    margin-right: 20px;
+    margin: 0 20px; /* Espaçamento uniforme em ambos os lados */
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.menu li a:hover {
+    text-decoration: underline; /* Sublinhar ao passar o mouse */
 }
 
 .conteudo {
     margin-top: 20px;
+    text-align: left; /* Alinha o conteúdo à esquerda */
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    padding: 10px 0;
 }

@@ -15,6 +15,6 @@ public class PrincipalController {
 
     @GetMapping("/produtos")
     public String getProdutosPage() {
-        return "produtos"; // Nome do arquivo HTML para a aba de produtos
+        return "produtos";
     }
 }
