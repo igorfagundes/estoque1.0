@@ -3,22 +3,107 @@
 <head>
     <title>Resultado do Cadastro</title>
     <style>
-        /* Estilo semelhante ao anterior */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-details {
+            margin-bottom: 20px;
+        }
+
+        .product-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Produto Cadastrado com Sucesso</h1>
+        <h1>Resultado do Cadastro</h1>
     </div>
     <div class="content">
-        <h2>Detalhes do Produto</h2>
-        <p><strong>Nome:</strong> <span th:text="${produto.nome}"></span></p>
-        <p><strong>Preço:</strong> <span th:text="${produto.preco}"></span></p>
-        <p><strong>Descrição:</strong> <span th:text="${produto.descricao}"></span></p>
-        <p><strong>Imagem:</strong> <span th:text="${produto.imagem}"></span></p>
-        <p><strong>Código QR:</strong> <span th:text="${produto.codigoQr}"></span></p>
-        <p><strong>Quantidade em Estoque:</strong> <span th:text="${produto.quantidadeEstoque}"></span></p>
-        <p><strong>Código de Barras:</strong> <span th:text="${produto.codigoBarras}"></span></p>
+        <!-- Success Message -->
+        <div class="success-message">
+            <h2>Produto Cadastrado com Sucesso</h2>
+        </div>
+
+        <!-- Product Details -->
+        <div class="product-details">
+            <p><strong>Nome:</strong> <span th:text="${produto.nome}">Nome do Produto</span></p>
+            <p><strong>Preço:</strong> <span th:text="${produto.preco}">Preço do Produto</span></p>
+            <p><strong>Descrição:</strong> <span th:text="${produto.descricao}">Descrição do Produto</span></p>
+
+            <p><strong>Imagem:</strong></p>
+            <img th:src="@{${produto.imagem}}" alt="Imagem do Produto" style="max-width: 100%;">
+
+            <p><strong>Código QR:</strong></p>
+            <img th:src="@{${produto.codigoQr}}" alt="Código QR do Produto" style="max-width: 100%;">
+
+            <p><strong>Quantidade em Estoque:</strong> <span th:text="${produto.quantidadeEstoque}">Quantidade em Estoque</span></p>
+            <p><strong>Código de Barras:</strong> <span th:text="${produto.codigoBarras}">Código de Barras</span></p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="buttons">
+            <a href="/principal/produtos/cadastrar">Cadastrar Novo Produto</a>
+            <a href="javascript:history.back()">Voltar</a>
+            <a href="/principal/inicio">Início</a>
+        </div>
     </div>
 </body>
 </html>
