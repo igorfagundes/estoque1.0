@@ -6,5 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+    Produto findByNome(String nome);
+
+    Produto findByCodigoBarras(String codigoBarras);
     // Métodos de consulta personalizados podem ser adicionados aqui, se necessário
 }

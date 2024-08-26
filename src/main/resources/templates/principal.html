@@ -10,20 +10,20 @@
             padding: 0;
         }
 
-        .header {
+        header {
             background-color: #007bff;
             color: white;
             padding: 15px;
             text-align: center;
         }
 
-        .navbar {
+        nav {
             display: flex;
             justify-content: center;
             background-color: #333;
         }
 
-        .navbar a {
+        nav a {
             padding: 14px 20px;
             text-decoration: none;
             color: white;
@@ -31,30 +31,39 @@
             display: block;
         }
 
-        .navbar a:hover {
+        nav a:hover {
             background-color: #575757;
         }
 
-        .content {
+        main {
             padding: 20px;
             text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            nav a {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <header>
         <h1>Bem-vindo ao Sistema de Gerenciamento</h1>
-    </div>
-    <div class="navbar">
+    </header>
+    <nav>
         <a href="/principal/inicio">Início</a>
         <a href="/principal/produtos">Produtos</a>
         <a href="/principal/caixa">Caixa</a>
         <a href="/principal/fornecedores">Fornecedores</a>
         <a href="/principal/clientes">Clientes</a>
         <a href="/principal/configuracoes">Configurações</a>
-    </div>
-    <div class="content">
+    </nav>
+    <main>
         <h2>Selecione uma aba para começar</h2>
-    </div>
+    </main>
 </body>
 </html>

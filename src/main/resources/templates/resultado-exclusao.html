@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<head>
+    <title>Resultado da Exclusão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons a, .buttons button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 4px;
+            margin: 0 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buttons a:hover, .buttons button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Resultado da Exclusão</h1>
+    </div>
+    <div class="content">
+        <!-- Mensagem de Sucesso -->
+        <div class="success-message">
+            <h3 th:text="${mensagem}"></h3>
+        </div>
+
+        <!-- Botões de Navegação -->
+        <div class="buttons">
+            <a href="/principal/produtos/excluir">Excluir Outro Produto</a>
+            <a href="javascript:history.back()">Voltar</a>
+            <a href="/inicio">Início</a>
+        </div>
+    </div>
+</body>
+</html>

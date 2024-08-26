@@ -38,28 +38,35 @@ public class ProdutoService {
         return false;
     }
 
-    // Cadastrar um novo produto (mesmo método que salvar)
-    public Produto cadastrar(Produto produto) {
-        return salvar(produto);
+    // Buscar produto por ID
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id).orElse(null);
+    }
+
+    // Buscar produto por nome
+    public Produto buscarPorNome(String nome) {
+        return produtoRepository.findByNome(nome);
+    }
+
+    // Buscar produto por código de barras
+    public Produto buscarPorCodigoBarras(String codigoBarras) {
+        return produtoRepository.findByCodigoBarras(codigoBarras);
     }
 
     // Modificar um produto existente
     public boolean modificar(Long id, Produto produtoAtualizado) {
-        // Verifica se o produto existe
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
         if (produtoExistente.isPresent()) {
             Produto produto = produtoExistente.get();
-            // Atualiza os campos do produto existente
             produto.setNome(produtoAtualizado.getNome());
             produto.setPreco(produtoAtualizado.getPreco());
-            produto.setDescricao(produtoAtualizado.getDescricao()); // Verifique o nome correto do método
+            produto.setDescricao(produtoAtualizado.getDescricao());
             produto.setImagem(produtoAtualizado.getImagem());
             produto.setCodigoQr(produtoAtualizado.getCodigoQr());
             produto.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
-            // Salva as alterações
             produtoRepository.save(produto);
             return true;
         }
-        return false; // Produto não encontrado
+        return false;
     }
 }

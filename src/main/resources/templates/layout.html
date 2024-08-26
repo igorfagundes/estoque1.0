@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title th:text="${title}">Minha Aplicação</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Inclua seu CSS aqui -->
-    <!-- Inclua outros arquivos CSS ou JS comuns -->
 </head>
 <body>
     <header>
@@ -20,7 +19,7 @@
     
     <main>
         <!-- Conteúdo específico da página será inserido aqui -->
-        <div th:insert="${content}"></div>
+        <div th:fragment="content"></div>
     </main>
     
     <footer>

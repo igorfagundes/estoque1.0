@@ -45,10 +45,19 @@
         }
 
         .product-details img {
-            max-width: 100%;
-            height: auto;
             border: 1px solid #ddd;
             border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .product-details .product-image {
+            max-width: 400px;
+            height: auto;
+        }
+
+        .product-details .product-qrcode {
+            max-width: 150px;
+            height: auto;
         }
 
         .buttons {
@@ -84,18 +93,19 @@
 
         <!-- Product Details -->
         <div class="product-details">
+            <p><strong>Imagem:</strong></p>
+            <img th:src="@{${produto.imagem}}" alt="Imagem do Produto" class="product-image">
+
             <p><strong>Nome:</strong> <span th:text="${produto.nome}">Nome do Produto</span></p>
             <p><strong>Preço:</strong> <span th:text="${produto.preco}">Preço do Produto</span></p>
-            <p><strong>Descrição:</strong> <span th:text="${produto.descricao}">Descrição do Produto</span></p>
-
-            <p><strong>Imagem:</strong></p>
-            <img th:src="@{${produto.imagem}}" alt="Imagem do Produto" style="max-width: 100%;">
+            <p><strong>Quantidade em Estoque:</strong> <span th:text="${produto.quantidadeEstoque}">Quantidade em Estoque</span></p>
 
             <p><strong>Código QR:</strong></p>
-            <img th:src="@{${produto.codigoQr}}" alt="Código QR do Produto" style="max-width: 100%;">
+            <img th:src="@{${produto.codigoQr}}" alt="Código QR do Produto" class="product-qrcode">
 
-            <p><strong>Quantidade em Estoque:</strong> <span th:text="${produto.quantidadeEstoque}">Quantidade em Estoque</span></p>
             <p><strong>Código de Barras:</strong> <span th:text="${produto.codigoBarras}">Código de Barras</span></p>
+
+            <p><strong>Descrição:</strong> <span th:text="${produto.descricao}">Descrição do Produto</span></p>
         </div>
 
         <!-- Action Buttons -->
