@@ -1,24 +1,27 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('nav ul li a');
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', event => {
-            event.preventDefault();
-            
-            // Remove a classe 'active' de todas as abas
-            tabContents.forEach(content => content.classList.remove('active'));
+    function showTab(tabId) {
+        tabContents.forEach(content => {
+            if (content.id === tabId) {
+                content.classList.add('active');
+            } else {
+                content.classList.remove('active');
+            }
+        });
+    }
 
-            // Adiciona a classe 'active' à aba selecionada
-            const targetId = tab.getAttribute('href').substring(1);
-            const targetContent = document.getElementById(targetId);
-            targetContent.classList.add('active');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function(event) {
+            event.preventDefault();
+            const tabId = this.getAttribute('data-tab');
+            showTab(tabId);
         });
     });
 
-    // Mostrar a primeira aba por padrão
+    // Exibir a primeira aba por padrão
     if (tabs.length > 0) {
-        tabs[0].click();
+        showTab(tabs[0].getAttribute('data-tab'));
     }
 });

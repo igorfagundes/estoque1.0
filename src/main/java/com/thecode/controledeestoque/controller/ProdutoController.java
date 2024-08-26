@@ -17,27 +17,28 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping
-    public List<Produto> getAllProdutos() {
-        return produtoService.listarTodos(); // Atualizado para listarTodos
+    public ResponseEntity<List<Produto>> listarTodos() {
+        List<Produto> produtos = produtoService.listarTodos();
+        return ResponseEntity.ok(produtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> getProdutoById(@PathVariable Long id) {
-        Optional<Produto> produto = produtoService.encontrarPorId(id); // Atualizado para encontrarPorId
+    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
+        Optional<Produto> produto = produtoService.encontrarPorId(id);
         return produto.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Produto> createProduto(@RequestBody Produto produto) {
-        Produto novoProduto = produtoService.salvar(produto); // Atualizado para salvar
+    @PostMapping("/principal/produtos/cadastrar")
+    public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
+        Produto novoProduto = produtoService.salvar(produto);
         return ResponseEntity.ok(novoProduto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> updateProduto(@PathVariable Long id, @RequestBody Produto produto) {
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
         try {
-            Produto produtoAtualizado = produtoService.modificar(id, produto); // Atualizado para modificar
+            Produto produtoAtualizado = produtoService.modificar(id, produto);
             return ResponseEntity.ok(produtoAtualizado);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
@@ -45,9 +46,9 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduto(@PathVariable Long id) {
+    public ResponseEntity<Void> removerProduto(@PathVariable Long id) {
         try {
-            produtoService.excluir(id); // Atualizado para excluir
+            produtoService.excluir(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

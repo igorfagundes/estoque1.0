@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Minha Aplicação</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Inclua seu CSS aqui -->
+    <!-- Inclua outros arquivos CSS ou JS comuns -->
+</head>
+<body>
+    <header>
+        <h1>Minha Aplicação</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/principal}">Principal</a></li>
+                <li><a th:href="@{/produtos}">Produtos</a></li>
+                <!-- Outros links de navegação -->
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Conteúdo específico da página será inserido aqui -->
+        <div th:insert="${content}"></div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Minha Aplicação</p>
+    </footer>
+</body>
+</html>

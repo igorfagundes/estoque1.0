@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Página Principal</title>
+    <title>Produtos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,11 +39,34 @@
             padding: 20px;
             text-align: center;
         }
+
+        .sub-navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .sub-navbar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            text-align: center;
+            display: block;
+            margin: 0 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .sub-navbar a:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Bem-vindo ao Sistema de Gerenciamento</h1>
+        <h1>Gerenciamento de Produtos</h1>
     </div>
     <div class="navbar">
         <a href="/principal/inicio">Início</a>
@@ -53,8 +76,15 @@
         <a href="/principal/clientes">Clientes</a>
         <a href="/principal/configuracoes">Configurações</a>
     </div>
+    <div class="sub-navbar">
+        <a href="/principal/produtos/cadastrar">Cadastrar</a>
+        <a href="/principal/produtos/apagar">Apagar Produto</a>
+        <a href="/principal/produtos/modificar">Modificar</a>
+        <a href="/principal/produtos/listar">Mostrar Todos os Produtos</a>
+        <a href="/principal/produtos/procurar">Procurar Produto</a>
+    </div>
     <div class="content">
-        <h2>Selecione uma aba para começar</h2>
+        <h2>Selecione uma função para gerenciar os produtos</h2>
     </div>
 </body>
 </html>
