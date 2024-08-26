@@ -14,13 +14,22 @@ public class Produto {
 
     private String nome;
     private Double preco;
-    private String descricao; // Verifique se o nome do campo é 'descricao'
+    private String descricao;
     private String imagem;
     private String codigoQr;
+    private String codigoBarras;
     private Integer quantidadeEstoque;
-    private Integer saidaEstoque;
 
-    // Getters e Setters
+    // Removido o campo saidaEstoque
+
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,7 +55,7 @@ public class Produto {
     }
 
     public String getDescricao() {
-        return descricao; // Certifique-se de que este método exista
+        return descricao;
     }
 
     public void setDescricao(String descricao) {
@@ -75,13 +84,5 @@ public class Produto {
 
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
-    }
-
-    public Integer getSaidaEstoque() {
-        return saidaEstoque;
-    }
-
-    public void setSaidaEstoque(Integer saidaEstoque) {
-        this.saidaEstoque = saidaEstoque;
     }
 }

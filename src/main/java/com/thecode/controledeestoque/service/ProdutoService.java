@@ -56,7 +56,6 @@ public class ProdutoService {
             produto.setImagem(produtoAtualizado.getImagem());
             produto.setCodigoQr(produtoAtualizado.getCodigoQr());
             produto.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
-            produto.setSaidaEstoque(produtoAtualizado.getSaidaEstoque());
             // Salva as alterações
             produtoRepository.save(produto);
             return true;
