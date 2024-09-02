@@ -1,30 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Procurar Produto</title>
+    <meta charset="UTF-8">
+    <title>Procurar Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button, .button-link {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none; /* Remove underline for link styled as button */
+            margin-right: 5px; /* Add margin between buttons */
+        }
+
+        button:hover, .button-link:hover {
+            background-color: #0056b3;
+        }
+
+        /* Optional: Add a bit of spacing below the button */
+        .button-container {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <div th:fragment="content">
-        <h3>Procurar Produto</h3>
-        <!-- Formulário para procurar produto -->
-        <form th:action="@{/produtos/procurar}" method="get">
-            <label for="id">ID do Produto:</label>
-            <input type="number" id="id" name="id" required>
-            <br>
-            <button type="submit">Procurar</button>
+    <div class="header">
+        <h1>Procurar Produtos</h1>
+    </div>
+    <div class="content">
+        <form action="/principal/produtos/procurar-resultados" method="get">
+            <div>
+                <label for="id">ID do Produto:</label>
+                <input type="text" id="id" name="id" />
+            </div>
+            <div>
+                <label for="nome">Nome do Produto:</label>
+                <input type="text" id="nome" name="nome" />
+            </div>
+            <div class="button-container">
+                <button type="submit">Procurar</button>
+                <a class="button-link" th:href="@{/principal}">Início</a>
+            </div>
         </form>
-        
-        <!-- Resultado da busca -->
-        <div th:if="${produto != null}">
-            <h4>Produto Encontrado:</h4>
-            <p>ID: <span th:text="${produto.id}">ID</span></p>
-            <p>Nome: <span th:text="${produto.nome}">Nome</span></p>
-            <p>Preço: <span th:text="${produto.preco}">Preço</span></p>
-        </div>
-        
-        <div th:if="${produto == null && not #lists.isEmpty(produtos)}">
-            <p>Produto não encontrado.</p>
-        </div>
     </div>
 </body>
 </html>

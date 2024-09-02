@@ -63,4 +63,17 @@ public class ProdutoService {
         }
         return false;
     }
+
+    public List<Produto> procurarProdutos(String nome, String codigoBarras, String categoria) {
+        // Se todos os critérios forem nulos ou vazios, retorne todos os produtos
+        if ((nome == null || nome.isEmpty()) && (codigoBarras == null || codigoBarras.isEmpty())
+                && (categoria == null || categoria.isEmpty())) {
+            return produtoRepository.findAll();
+        }
+
+        // Exemplo simples usando o repository padrão
+        return produtoRepository.findByNomeContainingAndCodigoBarrasContaining(
+                nome != null ? nome : "",
+                codigoBarras != null ? codigoBarras : "");
+    }
 }

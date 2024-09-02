@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados da Busca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .buttons a {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Resultados da Busca</h2>
+    </div>
+    <div class="content">
+        <!-- Exibe mensagem se não houver produtos -->
+        <div th:if="${produtos.isEmpty()}">
+            <p>Nenhum produto encontrado.</p>
+        </div>
+
+        <!-- Exibe tabela de produtos se houver -->
+        <div th:if="${!produtos.isEmpty()}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Quantidade em Estoque</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${produtos}">
+                        <td th:text="${produto.id}">1</td>
+                        <td th:text="${produto.nome}">Nome do Produto</td>
+                        <td th:text="${produto.preco}">R$ 100,00</td>
+                        <td th:text="${produto.quantidadeEstoque}">50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botão de navegação -->
+        <div class="buttons">
+            <a th:href="@{/principal/produtos/procurar}">Nova busca</a>
+            <a th:href="@{/principal}">Início</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -19,4 +19,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     // Busca produto pelo código de barras
     Produto findByCodigoBarras(String codigoBarras);
+
+    List<Produto> findByNomeContainingAndCodigoBarrasContaining(Object object, Object object2);
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,7 +42,6 @@ public class ProdutoController {
             @RequestParam("imagemFile") MultipartFile imagemFile,
             @RequestParam("codigoQrFile") MultipartFile codigoQrFile,
             Model model) {
-
         try {
             if (!imagemFile.isEmpty()) {
                 String imagemPath = saveUploadedFile(imagemFile);
@@ -142,6 +142,31 @@ public class ProdutoController {
             model.addAttribute("produto", produto);
         }
         return "resultado-exclusao";
+    }
 
+    @GetMapping("/procurar")
+    public String mostrarFormularioProcurar() {
+        return "procurar-produto"; // Nome do template para o formulário de busca
+    }
+
+    @GetMapping("/procurar-resultados")
+    public String procurarProdutos(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String nome,
+            Model model) {
+
+        List<Produto> produtos = new ArrayList<>();
+
+        if (id != null) {
+            Produto produto = produtoService.buscarPorId(id);
+            if (produto != null) {
+                produtos.add(produto);
+            }
+        } else if (nome != null && !nome.isEmpty()) {
+            produtos = produtoService.buscarPorNome(nome);
+        }
+
+        model.addAttribute("produtos", produtos);
+        return "resultado-procurar-produtos"; // Retorna o template com os resultados
     }
 }
