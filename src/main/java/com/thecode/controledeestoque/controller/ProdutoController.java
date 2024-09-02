@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 @RequestMapping("/principal/produtos")
@@ -22,13 +22,12 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    // Diretório para salvar arquivos
     private static final String UPLOADED_FOLDER = "uploads/";
 
     @GetMapping("/listar")
     public String listarTodos(Model model) {
-        // Lógica para listar todos os produtos
-        return "produtos-list";
+        model.addAttribute("produtos", produtoService.listarTodos());
+        return "listar-produtos";
     }
 
     @GetMapping("/cadastrar")
@@ -86,11 +85,19 @@ public class ProdutoController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String codigoBarras,
             Model model) {
+
         Produto produto = null;
+
         if (id != null) {
             produto = produtoService.buscarPorId(id);
         } else if (nome != null && !nome.isEmpty()) {
-            produto = produtoService.buscarPorNome(nome);
+            List<Produto> produtos = produtoService.buscarPorNome(nome);
+            if (produtos.size() == 1) {
+                produto = produtos.get(0); // Se apenas um produto for encontrado
+            } else if (produtos.size() > 1) {
+                model.addAttribute("mensagem", "Mais de um produto encontrado com o mesmo nome. Refine sua busca.");
+                return "resultado-exclusao"; // Retorna mensagem se houver mais de um resultado
+            }
         } else if (codigoBarras != null && !codigoBarras.isEmpty()) {
             produto = produtoService.buscarPorCodigoBarras(codigoBarras);
         }
@@ -105,13 +112,20 @@ public class ProdutoController {
         return "resultado-exclusao";
     }
 
-    @GetMapping("/modificar")
-    public String mostrarFormularioModificar() {
-        return "modificar-produto";
+    @GetMapping("/modificar/{id}")
+    public String mostrarFormularioModificar(@PathVariable Long id, Model model) {
+        Produto produto = produtoService.buscarPorId(id);
+        if (produto != null) {
+            model.addAttribute("produto", produto);
+            return "modificar-produto";
+        } else {
+            model.addAttribute("mensagem", "Produto não encontrado.");
+            return "resultado-produto";
+        }
     }
 
-    @PostMapping("/modificar")
-    public String modificarProduto(@RequestParam Long id, @ModelAttribute Produto produto, Model model) {
+    @PostMapping("/modificar/{id}")
+    public String modificarProduto(@PathVariable Long id, @ModelAttribute Produto produto, Model model) {
         boolean sucesso = produtoService.modificar(id, produto);
         if (sucesso) {
             model.addAttribute("mensagem", "Produto modificado com sucesso!");
@@ -119,5 +133,15 @@ public class ProdutoController {
             model.addAttribute("mensagem", "Produto não encontrado.");
         }
         return "resultado-produto";
+    }
+
+    @GetMapping("/resultado-exclusao")
+    public String mostrarResultadoExclusao(@RequestParam("id") Long id, Model model) {
+        Produto produto = produtoService.buscarPorId(id);
+        if (produto != null) {
+            model.addAttribute("produto", produto);
+        }
+        return "resultado-exclusao";
+
     }
 }

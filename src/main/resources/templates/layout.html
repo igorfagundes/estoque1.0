@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Minha Aplicação</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Inclua seu CSS aqui -->
 </head>
 <body>
     <header>
@@ -12,18 +11,17 @@
             <ul>
                 <li><a th:href="@{/principal}">Principal</a></li>
                 <li><a th:href="@{/produtos}">Produtos</a></li>
-                <!-- Outros links de navegação -->
             </ul>
         </nav>
     </header>
     
-    <main>
-        <!-- Conteúdo específico da página será inserido aqui -->
-        <div th:fragment="content"></div>
+    <main th:fragment="layout">
+        <!-- Conteúdo principal do layout -->
+        <div th:insert="~{::content}"></div>
     </main>
     
     <footer>
-        <p>&copy; 2024 Minha Aplicação</p>
+        <p>&copy; The Code Brasil 2024 Minha Aplicação</p>
     </footer>
 </body>
 </html>

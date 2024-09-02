@@ -2,11 +2,11 @@ package com.thecode.controledeestoque.service;
 
 import com.thecode.controledeestoque.model.Produto;
 import com.thecode.controledeestoque.repository.ProdutoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -19,9 +19,9 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    // Encontrar produto por ID
-    public Optional<Produto> encontrarPorId(Long id) {
-        return produtoRepository.findById(id);
+    // Encontrar produto por ID, retorna null se não encontrado
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id).orElse(null);
     }
 
     // Salvar (cadastrar ou atualizar) um produto
@@ -38,14 +38,9 @@ public class ProdutoService {
         return false;
     }
 
-    // Buscar produto por ID
-    public Produto buscarPorId(Long id) {
-        return produtoRepository.findById(id).orElse(null);
-    }
-
-    // Buscar produto por nome
-    public Produto buscarPorNome(String nome) {
-        return produtoRepository.findByNome(nome);
+    // Buscar produtos por nome
+    public List<Produto> buscarPorNome(String nome) {
+        return produtoRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     // Buscar produto por código de barras
@@ -55,16 +50,15 @@ public class ProdutoService {
 
     // Modificar um produto existente
     public boolean modificar(Long id, Produto produtoAtualizado) {
-        Optional<Produto> produtoExistente = produtoRepository.findById(id);
-        if (produtoExistente.isPresent()) {
-            Produto produto = produtoExistente.get();
-            produto.setNome(produtoAtualizado.getNome());
-            produto.setPreco(produtoAtualizado.getPreco());
-            produto.setDescricao(produtoAtualizado.getDescricao());
-            produto.setImagem(produtoAtualizado.getImagem());
-            produto.setCodigoQr(produtoAtualizado.getCodigoQr());
-            produto.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
-            produtoRepository.save(produto);
+        Produto produtoExistente = produtoRepository.findById(id).orElse(null);
+        if (produtoExistente != null) {
+            produtoExistente.setNome(produtoAtualizado.getNome());
+            produtoExistente.setPreco(produtoAtualizado.getPreco());
+            produtoExistente.setDescricao(produtoAtualizado.getDescricao());
+            produtoExistente.setImagem(produtoAtualizado.getImagem());
+            produtoExistente.setCodigoQr(produtoAtualizado.getCodigoQr());
+            produtoExistente.setQuantidadeEstoque(produtoAtualizado.getQuantidadeEstoque());
+            produtoRepository.save(produtoExistente);
             return true;
         }
         return false;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Resultado da Exclusão</title>
     <style>
@@ -19,60 +19,64 @@
 
         .content {
             padding: 20px;
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px auto;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            border-radius: 4px;
-            padding: 15px;
+        .message {
+            font-size: 18px;
+            color: #333;
             margin-bottom: 20px;
         }
 
+        .product-details p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
         .buttons {
-            text-align: center;
             margin-top: 20px;
         }
 
-        .buttons a, .buttons button {
-            display: inline-block;
-            padding: 10px 20px;
+        .buttons a {
+            padding: 10px 15px;
             text-decoration: none;
-            color: #fff;
+            color: white;
             background-color: #007bff;
             border-radius: 4px;
-            margin: 0 10px;
             font-weight: bold;
-            border: none;
-            cursor: pointer;
+            margin-right: 5px;
+            display: inline-block;
         }
 
-        .buttons a:hover, .buttons button:hover {
+        .buttons a:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Resultado da Exclusão</h1>
+        <h2>Resultado da Exclusão</h2>
     </div>
     <div class="content">
-        <!-- Mensagem de Sucesso -->
-        <div class="success-message">
-            <h3 th:text="${mensagem}"></h3>
+        <div class="message">
+            <div th:if="${mensagem != null}">
+                <div class="success-message" th:text="${mensagem}">Mensagem de sucesso aqui</div>
+            </div>
+
+            <!-- Verifica se a mensagem não está definida e o produto é nulo -->
+            <div th:if="${mensagem == null and produto == null}">
+                <p>Produto não encontrado.</p>
+            </div>
         </div>
 
-        <!-- Botões de Navegação -->
         <div class="buttons">
-            <a href="/principal/produtos/excluir">Excluir Outro Produto</a>
-            <a href="javascript:history.back()">Voltar</a>
-            <a href="/inicio">Início</a>
+            <a th:href="@{/principal/produtos/excluir}">Excluir outro produto</a>
+            <a th:href="@{/principal/produtos/listar}">Voltar à lista de produtos</a>
+            <a th:href="@{/principal}">Início</a>
         </div>
     </div>
 </body>

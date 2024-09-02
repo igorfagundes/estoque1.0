@@ -1,28 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Mostrar Todos os Produtos</title>
+    <title>Lista de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .buttons a {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div th:fragment="content">
-        <h3>Lista de Todos os Produtos</h3>
-        <!-- Lista de produtos -->
+    <div class="header">
+        <h2>Lista de Produtos</h2>
+    </div>
+    <div class="content">
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Preço</th>
+                    <th>Quantidade em Estoque</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="produto : ${produtos}">
                     <td th:text="${produto.id}">1</td>
                     <td th:text="${produto.nome}">Nome do Produto</td>
-                    <td th:text="${produto.preco}">Preço do Produto</td>
+                    <td th:text="${produto.preco}">R$ 100,00</td>
+                    <td th:text="${produto.quantidadeEstoque}">50</td>
+                    <td class="buttons">
+                        <a th:href="@{/principal/produtos/excluir(id=${produto.id})}">Excluir</a>
+                        <a th:href="@{/principal/produtos/editar(id=${produto.id})}">Editar</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <!-- Botão de navegação -->
+        <div class="buttons">
+            <a th:href="@{/principal/produtos/cadastrar}">Cadastrar novo produto</a>
+            <a th:href="@{/principal}">Início</a>
+        </div>
     </div>
 </body>
 </html>
