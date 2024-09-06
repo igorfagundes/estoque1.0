@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultado da Exclusão do Fornecedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Resultado da Exclusão do Fornecedor</h2>
+    </div>
+    <div class="content">
+        <div class="message">
+            <div th:if="${mensagem != null}">
+                <div class="success-message" th:text="${mensagem}">Mensagem de sucesso aqui</div>
+            </div>
+
+            <!-- Verifica se a mensagem não está definida e o fornecedor é nulo -->
+            <div th:if="${mensagem == null and fornecedor == null}">
+                <p>Fornecedor não encontrado.</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a th:href="@{/principal/fornecedores/excluir}">Excluir outro fornecedor</a>
+            <a th:href="@{/principal/fornecedores/listar}">Voltar à lista de fornecedores</a>
+            <a th:href="@{/principal}">Início</a>
+        </div>
+    </div>
+</body>
+</html>

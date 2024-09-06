@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Fornecedores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .buttons a {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Lista de Fornecedores</h2>
+    </div>
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="fornecedor : ${fornecedores}">
+                    <td th:text="${fornecedor.id}">1</td>
+                    <td th:text="${fornecedor.nome}">Nome do Fornecedor</td>
+                    <td th:text="${fornecedor.endereco}">Endereço</td>
+                    <td th:text="${fornecedor.telefone}">Telefone</td>
+                    <td th:text="${fornecedor.email}">Email</td>
+                    <td>
+                        <a th:href="@{/principal/fornecedores/modificar(id=${fornecedor.id})}">Editar</a>
+                        <form action="/principal/fornecedores/excluir" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${fornecedor.id}" />
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <a href="/principal/fornecedores/cadastrar">Cadastrar novo fornecedor</a>
+            <a href="/principal">Início</a>
+        </div>
+    </div>
+</body>
+</html>

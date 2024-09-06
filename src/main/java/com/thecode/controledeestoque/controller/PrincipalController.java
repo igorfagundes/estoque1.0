@@ -17,4 +17,9 @@ public class PrincipalController {
     public String getProdutosPage() {
         return "produtos";
     }
+
+    @GetMapping("/fornecedores")
+    public String getFornecedorPage() {
+        return "fornecedores";
+    }
 }

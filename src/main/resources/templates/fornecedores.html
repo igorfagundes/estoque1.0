@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fornecedores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        .navbar a {
+            padding: 14px 20px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            display: block;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sub-navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .sub-navbar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            text-align: center;
+            display: block;
+            margin: 0 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .sub-navbar a:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gerenciamento de Fornecedores</h1>
+    </div>
+    <div class="navbar">
+        <a href="/principal/inicio">Início</a>
+        <a href="/principal/produtos">Produtos</a>
+        <a href="/principal/caixa">Caixa</a>
+        <a href="/principal/fornecedores">Fornecedores</a>
+        <a href="/principal/clientes">Clientes</a>
+        <a href="/principal/configuracoes">Configurações</a>
+    </div>
+    <div class="sub-navbar">
+        <a href="/principal/fornecedores/cadastrar">Cadastrar Fornecedor</a>
+        <a href="/principal/fornecedores/excluir">Apagar Fornecedor</a>
+        <a href="/principal/fornecedores/modificar">Modificar Fornecedor</a>
+        <a href="/principal/fornecedores/listar">Mostrar Todos os Fornecedores</a>
+        <a href="/principal/fornecedores/procurar">Procurar Fornecedor</a>
+    </div>
+    <div class="content">
+        <h2>Selecione uma função para gerenciar os fornecedores</h2>
+    </div>
+</body>
+</html>

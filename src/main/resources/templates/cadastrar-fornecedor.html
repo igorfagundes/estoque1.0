@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Fornecedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+
+        .navbar a {
+            padding: 14px 20px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            display: block;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        .sub-navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .sub-navbar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            text-align: center;
+            display: block;
+            margin: 0 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        .sub-navbar a:hover {
+            background-color: #ccc;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        form a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #ccc;
+            color: #000;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        form a:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cadastrar Fornecedor</h1>
+    </div>
+    <div class="content">
+        <form action="/principal/fornecedores/cadastrar" method="post">
+            <div>
+                <label for="empresa">Empresa:</label>
+                <input type="text" id="empresa" name="empresa" />
+            </div>
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" />
+            </div>
+            <div>
+                <label for="secao">Seção:</label>
+                <input type="text" id="secao" name="secao" />
+            </div>
+            <div>
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" />
+            </div>
+            <div>
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" />
+            </div>
+            <div>
+                <button type="submit">Salvar</button>
+                <a href="/principal/fornecedores">Voltar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado da Operação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .details {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Resultado da Operação</h1>
+    </div>
+    <div class="content">
+        <div class="details" th:if="${fornecedores != null and !fornecedores.isEmpty()}">
+            <div th:each="fornecedor : ${fornecedores}">
+                <p><strong>ID:</strong> <span th:text="${fornecedor.id}"></span></p>
+                <p><strong>Empresa:</strong> <span th:text="${fornecedor.empresa}"></span></p>
+                <p><strong>Nome:</strong> <span th:text="${fornecedor.nome}"></span></p>
+                <p><strong>Endereço:</strong> <span th:text="${fornecedor.endereco}"></span></p>
+                <p><strong>Telefone:</strong> <span th:text="${fornecedor.telefone}"></span></p>
+                <p><strong>Seção:</strong> <span th:text="${fornecedor.secao}"></span></p>
+                <hr>
+            </div>
+        </div>
+        <div class="details" th:if="${fornecedores == null or fornecedores.isEmpty()}">
+            <p>Fornecedor não encontrado.</p>
+        </div>
+        <div class="buttons">
+            <a href="/principal/fornecedores/listar">Voltar</a>
+            <a href="/principal/inicio">Início</a>
+        </div>
+    </div>
+</body>
+</html>
