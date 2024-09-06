@@ -24,6 +24,7 @@ public class FornecedorService {
         return fornecedorRepository.findById(id);
     }
 
+    // Busca fornecedores pelo nome (parcial)
     public List<Fornecedor> procurarFornecedoresPorNome(String nome) {
         return fornecedorRepository.findByNomeContaining(nome);
     }
@@ -44,8 +45,8 @@ public class FornecedorService {
     }
 
     // Busca um fornecedor pelo nome
-    public Fornecedor buscarPorNome(String nome) {
-        return fornecedorRepository.findByNome(nome);
+    public Optional<Fornecedor> buscarPorNome(String nome) {
+        return Optional.ofNullable(fornecedorRepository.findByNome(nome));
     }
 
     // Validação dos campos antes de salvar ou atualizar o fornecedor

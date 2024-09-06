@@ -37,7 +37,7 @@ public class FornecedorController {
         return "redirect:/principal/fornecedores/listar";
     }
 
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/modificar")
     public String mostrarFormularioModificar(@PathVariable Long id, Model model) {
         Optional<Fornecedor> fornecedorOpt = fornecedorService.buscarPorId(id);
         if (fornecedorOpt.isPresent()) {
@@ -49,11 +49,16 @@ public class FornecedorController {
         }
     }
 
-    @PostMapping("/modificar/{id}")
-    public String modificarFornecedor(@PathVariable Long id, @ModelAttribute Fornecedor fornecedor, Model model) {
+    @PostMapping("/modificar")
+    public String modificarFornecedor(@RequestParam Long id,
+            @RequestParam String empresa,
+            @RequestParam String secao,
+            Model model) {
         Optional<Fornecedor> fornecedorOpt = fornecedorService.buscarPorId(id);
         if (fornecedorOpt.isPresent()) {
-            fornecedor.setId(id);
+            Fornecedor fornecedor = fornecedorOpt.get();
+            fornecedor.setEmpresa(empresa);
+            fornecedor.setSecao(secao);
             fornecedorService.salvar(fornecedor);
             model.addAttribute("mensagem", "Fornecedor modificado com sucesso!");
             return "redirect:/principal/fornecedores/listar";
