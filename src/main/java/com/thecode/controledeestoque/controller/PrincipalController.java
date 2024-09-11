@@ -22,4 +22,9 @@ public class PrincipalController {
     public String getFornecedorPage() {
         return "fornecedores";
     }
+
+    @GetMapping("/clientes")
+    public String getClientePage() {
+        return "clientes";
+    }
 }
